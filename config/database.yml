@@ -1,9 +1,20 @@
-production:
-  <<: *default
+default: &default
   adapter: postgresql
   encoding: unicode
-  host: dpg-d9lk0hoae00c73ait4kg-a.oregon-postgres.render.com
-  port: 5432
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
   database: webpagtrading_development
   username: nithyanand
-  password: PuYA2bywpOxNh73Qtt8vFWYNJghVNjki
+  password: 123456789
+  host: localhost
+  port: 5432
+
+test:
+  <<: *default
+  database: webpagtrading_test
+
+production:
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
