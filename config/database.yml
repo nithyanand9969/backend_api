@@ -1,0 +1,8 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: webpagtrading_development
+  username: nithyanand
+  password: 123456789
+  host: localhost
+  port: 5432
