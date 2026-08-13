@@ -17,4 +17,8 @@ test:
 
 production:
   <<: *default
-  url: <%= ENV["DATABASE_URL"] %>
+  database: webpagtrading_development
+  username: nithyanand
+  password: PuYA2bywpOxNh73Qtt8vFWYNJghVNjki
+  host: dpg-d9lk0hoae00c73ait4kg-a
+  port: 5432
