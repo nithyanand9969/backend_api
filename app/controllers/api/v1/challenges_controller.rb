@@ -2,16 +2,16 @@ module Api
     module V1
         class ChallengesController < ApplicationController
 
+            before_action:set_challenge,only:[:show,:update,:destroy]
+
             def index
                
                 @challenges =  Challenge.all
                 render json: @challenges
             end
             def create
-                puts "rrrr"
-                puts params
-                puts 'wwwwww'
-                challenge = Challenge.new(title:'welcome',description:'welcome to the challenge',start_date:Date.today,end_date:Date.today+10)
+               
+                challenge = Challenge.new(challenges_params)
                 if challenge.save
                     render json: {
                         status: 'success',
@@ -25,17 +25,60 @@ module Api
                             end
                         end
             def show
-                #show single challenge
+           
+                if @challenge
+                    render json: {
+                        status: 'success',
+                        message: 'Challenge found successfully',
+                        data: @challenge
+                    }
+                else render json:{
+                    status: 'error',
+                    message: 'Challenge not found',
+                    data:@challenge.errors.full_messages
+                }
+            end
                
             end
             def update
-                #update single challenge
+             
+                if @challenge.update(challenges_params)
+                    render json: {
+                        status: 'success',
+                        message: 'Challenge updated successfully',
+                        data: @challenge
+                    }
+                else
+                    render json: {
+                        status: 'error',
+                        message: 'Challenge not updated',
+                    }
+                end
             end
             def destroy
-                #delete single challenge
+             
+                if @challenge
+                    @challenge.destroy
+                    render json: {
+                        status: 'success',
+                        message: 'Challenge deleted successfully'
+                    }
+                else
+                    render json: {
+                        status: 'error',
+                        message: 'Challenge not found'
+                    }
+                end
             end
 
-           
+           private 
+
+           def challenges_params
+                params.require(:challenge).permit(:title,:description,:start_date,:end_date)
+           end
+           def set_challenge
+            @challenge = Challenge.find(params[:id])
+           end
         end
 
     end
